@@ -2,3 +2,6 @@ SELECT q1, q2, q3, q4, q5, q6, q7, QN12, QN17
 FROM XXHqn
 WHERE QN12 is NOT null
 AND QN17 is NOT null
+
+
+end
