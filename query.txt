@@ -4,4 +4,3 @@ WHERE QN12 is NOT null
 AND QN17 is NOT null
 
 
-end
