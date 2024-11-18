@@ -14,7 +14,7 @@ import numpy as np
 
 
 ###############################################################################
-# Creating dataframe and dataframe copy
+# Creating dataframe and dataframe copies
 ###############################################################################
 df1 = pd.read_csv("data.csv")
 df2 = df1.copy()
@@ -50,11 +50,13 @@ df4['q1'] = df4['q1'].replace(df4_age_map)
 a = df4.groupby('q1').size()
 mylabels = ["12", "13", "14", "15", "16", "17", "18+"]
 exp_nums = [0.5, 0.5, 0.1, 0.1, 0.1, 0.1, 0.1]
-print(a)
-plt.figure(figsize=(10,10))
+#print(a)
+plt.figure(figsize=(10,13))
 
 plt.pie(a, explode=exp_nums, labels=mylabels, labeldistance=0.7)
+plt.title("Age Breakdown")
 plt.legend(a)
+
 ## resources ##
 """
 https://www.w3schools.com/python/matplotlib_pie_charts.asp
@@ -75,7 +77,6 @@ df4['q2'] = df4['q2'].replace(df4_sex_map)
 b = df4.groupby('q2').size()
 mylabels = ["male", "female"]
 exp_nums = [0.5, 0.5]
-print(b)
 plt.figure(figsize=(4,4))
 
 plt.pie(b, labels=mylabels, labeldistance=0.7)
@@ -85,17 +86,34 @@ plt.legend(b)
 #pie chart for age of participants ✓
 #pie chart for sex of participants ✓
 
+###############################################################################
 # how many female students brought weapons 4 or more days
+###############################################################################
 
-print("===============")
+# start by seeing how many female participants exist in df
+print("===============\n")
 female_participants = df4[df4['q2']=='female']
 
-print(female_participants)
+#now  see how many of those female 
 weapons_4_or_more_days = female_participants[female_participants['q12']==4] 
 count = weapons_4_or_more_days.shape[0]
+
+
 print(count)
 plt.bar('female sudents with weapons', count, 4, 4)
 plt.show()
+
+
+## out of that number, how many got into frequent fights
+count2 = weapons_4_or_more_days[weapons_4_or_more_days['q17']=='1']
+count2 = count2.shape[0]
+print(f"count 2 = {count2}")
+### edit to make things accurate
+
+
+
+
+
 
 # how many female students fought more than 5 times in a year
 
