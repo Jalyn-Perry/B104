@@ -42,6 +42,9 @@ X = df2
 ###############################################################################
 # age breakdown of participants
 ###############################################################################
+###############################################################################
+# age breakdown of participants
+###############################################################################
 def ageBreakdown():
     df4_age_map = {
         1:"12",
@@ -69,7 +72,7 @@ def ageBreakdown():
     #print(a)
     plt.figure(figsize=(10,13))
     
-    plt.pie(a, explode=exp_nums, labels=mylabels, labeldistance=0.7, colors=colors)
+    plt.pie(a, explode=exp_nums, labels=mylabels, labeldistance=0.7, colors=colors, shadow= True)
     plt.title("Age Breakdown")
     plt.legend(a)
     
@@ -80,19 +83,20 @@ def ageBreakdown():
     https://www.freecodecamp.org/news/matplotlib-figure-size-change-plot-size-in-python/
     """
 #------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 
 ###############################################################################
 # sex breakdown of participants
 ###############################################################################
-def sexBreakdown():
+def sexBreakdown(): ## Pink & Blue
     df4_sex_map = {
         1:"male",
         2:"female"
         }
     colors = [
     '#0000FF',  # Blue
-    '#1E90FF',  # DodgerBlue
+    'hotpink',  # Hotpink
     ]
     
     df4['q2'] = df4['q2'].replace(df4_sex_map)
@@ -247,9 +251,19 @@ def pieChartAges():
     y = np.array([age_12, age_13, age_14, age_15,age_16, age_17, age_18])
     mylabels = ['age 12:0.2%','age 13:0.16%','age 14:12.84%','age 15:27.62%','age 16:26.03%','age 17:22.28%', 'age 18 or older:10.83%']
     plt.figure(figsize=(30,8))
-    plt.pie(y, labels = mylabels)
+    mycolors = [
+    '#0000FF',  # Blue
+    '#1E90FF',  # DodgerBlue
+    '#4169E1',  # RoyalBlue
+    '#4682B4',  # SteelBlue
+    '#5F9EA0',  # CadetBlue
+    '#87CEEB',  # SkyBlue
+    '#B0E0E6',  # PowderBlue
+    ]
+    plt.pie(y, labels = mylabels, colors = mycolors, shadow = True)
     plt.legend(y)
     plt.figure(figsize=(4,5))
+    plt.title('Age Percenatage')
     plt.show()
 #------------------------------------------------------------------------------
 
@@ -303,18 +317,32 @@ def heatmap2():
 ###############################################################################
 # script 
 ###############################################################################
-ha = int(input("enter 1 to start"))
+# ha = int(input("enter 1 to start"))
 
-if ha == 1:
+# if ha == 1:
     
 
-    print("Please select option when prompted...\n\n") 
-    console = Console()
+#     print("Please select option when prompted...\n\n") 
+#     console = Console()
 
-    status = console.status("[bold green]loading...")
-    status.start()
+#     status = console.status("[bold green]loading...")
+#     status.start()
     
-    for i in range(10):
-        time.sleep(0.5)
+#     for i in range(10):
+#         time.sleep(0.5)
     
-    status.stop()
+#     status.stop()
+
+
+
+
+ageBreakdown()
+sexBreakdown()
+possibleCorelationFemales()
+question12Graph()
+question17Graph()
+possibleCorelationMales()
+pieChartAges()
+hist()
+heatmap1()
+heatmap2()

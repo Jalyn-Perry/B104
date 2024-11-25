@@ -1,3 +1,6 @@
+import project as colors
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -22,10 +25,17 @@ age_18 = round(age_18,2)
 y = np.array([age_12, age_13, age_14, age_15,age_16, age_17, age_18])
 mylabels = ['age 12:0.2%','age 13:0.16%','age 14:12.84%','age 15:27.62%','age 16:26.03%','age 17:22.28%', 'age 18 or older:10.83%']
 plt.figure(figsize=(30,8))
-plt.pie(y, labels = mylabels)
+myColors=['cornflowerblue','royalbue','navy','lightsteelblue','blue']
+plt.pie(y, labels = mylabels, colors = myColors)
 plt.legend(y)
 plt.figure(figsize=(4,5))
 plt.show()
+
+
+
+
+
+colors.ageBreakdown()
 
 
 
