@@ -73,7 +73,7 @@ def ageBreakdown():
     plt.figure(figsize=(10,13))
     
     plt.pie(a, explode=exp_nums, labels=mylabels, labeldistance=0.7, colors=colors, shadow= True)
-    plt.title("Age Breakdown")
+    plt.title("Age Breakdown of Participants")
     plt.legend(a)
     
     ## resources ##
@@ -103,10 +103,11 @@ def sexBreakdown(): ## Pink & Blue
     b = df4.groupby('q2').size()
     mylabels = ["male", "female"]
     
-    plt.title("Sex Breakdown")
+    
     plt.figure(figsize=(4,4))
     
     plt.pie(b, labels=mylabels, labeldistance=0.7, colors=colors)
+    plt.title("Sex Breakdown of Participants")
     plt.legend(b)
 #------------------------------------------------------------------------------
     
@@ -249,7 +250,7 @@ def pieChartAges():
     age_18= (2167/20005) * 100
     age_18 = round(age_18,2)
     y = np.array([age_12, age_13, age_14, age_15,age_16, age_17, age_18])
-    mylabels = ['age 12:0.2%','age 13:0.16%','age 14:12.84%','age 15:27.62%','age 16:26.03%','age 17:22.28%', 'age 18 or older:10.83%']
+    mylabels = ['age 12','age 13','age 14','age 15','age 16','age 17', 'age 18 or older']
     plt.figure(figsize=(30,8))
     mycolors = [
     '#0000FF',  # Blue
