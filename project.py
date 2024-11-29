@@ -5,11 +5,10 @@ TODO
 #pie chart for sex of participants      ✓
 histogram                               ✓
 heatmap                                 ✓
-is heatmap accurate?                     ?
-change colors for all graphs?            ?
-make sure everyting is mapped correctly  ?
-look for a cause and effect
-this happens because ofthis
+is heatmap accurate?                     ✓
+change colors for all graphs?            ✓
+make sure everyting is mapped correctly  ✓
+
 """
 
 # age, sex, and violent tendencies
@@ -82,6 +81,7 @@ def ageBreakdown():
     https://stackoverflow.com/questions/46542572/how-to-plot-pie-chart-using-data-frame-group-by-different-range
     https://www.freecodecamp.org/news/matplotlib-figure-size-change-plot-size-in-python/
     """
+    plt.show()
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
@@ -109,6 +109,7 @@ def sexBreakdown(): ## Pink & Blue
     plt.pie(b, labels=mylabels, labeldistance=0.7, colors=colors)
     plt.title("Sex Breakdown of Participants")
     plt.legend(b)
+    plt.show()
 #------------------------------------------------------------------------------
     
 
@@ -116,8 +117,14 @@ def sexBreakdown(): ## Pink & Blue
 # how many female students brought weapons 4 or more days
 ###############################################################################
 def possibleCorelationFemales():
+    df4_sex_map = {
+        1:"male",
+        2:"female"
+        }
+    df4['q2'] = df4['q2'].replace(df4_sex_map)
+    #plt.figure(figsize=(10,40))
     # start by seeing how many female participants exist in df
-    print("===============\n")
+    #print("===============\n")
     female_participants = df4[df4['q2']=='female']
     
     #now  see how many of those female 
@@ -125,9 +132,8 @@ def possibleCorelationFemales():
     count = weapons_4_or_more_days_females.shape[0]
     
     
-    print(count)
-    plt.bar('female sudents with weapons', count, 4, 4)
-    plt.show()
+    #print(count)
+    
     
     ## out of that number, how many got into frequent fights
     count2 = weapons_4_or_more_days_females[ (weapons_4_or_more_days_females['q17']==3) 
@@ -136,7 +142,17 @@ def possibleCorelationFemales():
                                     | (weapons_4_or_more_days_females['q17']==6) 
                                     | (weapons_4_or_more_days_females['q17']==7)]
     count2 = count2.shape[0]
-    print(f"count 2 = {count2}")
+    #print(f"count 2 = {count2}")
+    
+    
+    plt.bar('female sudents with weapons', count)
+    plt.bar('weapons and fights', count2)
+    
+    plt.show()
+    
+
+    plt.figure(figsize=(8, 6))
+    
     ### edit to make things accurate
 #------------------------------------------------------------------------------
 
@@ -157,6 +173,7 @@ def question12Graph():
     
         }
     df2['q12'] = df2['q12'].replace(q12_map)
+    
     #------------------------------------------------------------------------------
     ###############################################################################
     # plot question 12
@@ -170,6 +187,7 @@ def question12Graph():
     #format graph
     for p in ax.patches:
         ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height() + 805), ha='center', va='top', color='black', fontsize=10)
+    plt.show()
 #------------------------------------------------------------------------------
 
 
@@ -212,13 +230,18 @@ def question17Graph():
 ###############################################################################
 def possibleCorelationMales():
     ## See how much male participants there are
-    print("===============\n")
+    #print("===============\n")
+    df4_sex_map = {
+        1:"male",
+        2:"female"
+        }
+    df4['q2'] = df4['q2'].replace(df4_sex_map)
     male_participants = df4[df4['q2']=='male']
     ## see how many males answered 4 or more days
     
     weapons_4_or_more_days_males = male_participants[(male_participants['q12'] == 4) | (male_participants['q12'] == 5)]
     count = weapons_4_or_more_days_males.shape[0]
-    print(count)
+    #print(count)
     
     count3 = weapons_4_or_more_days_males[
         (weapons_4_or_more_days_males['q17'] == 3) |
@@ -228,6 +251,14 @@ def possibleCorelationMales():
         (weapons_4_or_more_days_males['q17'] == 7)
     ]                                              
     count3 = count3.shape[0]
+    
+    plt.figure(figsize=(8, 6))
+    plt.bar('male sudents with weapons', count)
+    plt.bar('weapons and fights', count3)
+    
+    plt.show()
+    
+
 #------------------------------------------------------------------------------
 
 
@@ -295,6 +326,7 @@ def hist():
     
     sns.kdeplot(x, alpha=0.7, color='blue')
     sns.kdeplot(y, alpha=0.7, color='purple')
+    plt.show()
 #------------------------------------------------------------------------------
 
 
@@ -304,6 +336,7 @@ def hist():
 def heatmap1():
     new_df = df1.drop('q5', axis=1)
     sns.heatmap(new_df.corr(), cmap='Blues')
+    plt.show()
     
 def heatmap2():
     
@@ -313,37 +346,87 @@ def heatmap2():
     df10 = df1.drop(questionsToDrop, axis=1)
     df10 = df10.dropna()
     sns.heatmap(df10.corr(method='spearman'), cmap='BuGn', annot=True)
+    plt.show()
 #------------------------------------------------------------------------------
 
 ###############################################################################
 # script 
 ###############################################################################
-# ha = int(input("enter 1 to start"))
 
-# if ha == 1:
+keepGoing = 'y'
+
+while keepGoing == 'y':
+
+    def displayMenu():
+        print('Select 1 for Age Break Down')
+        print('Select 2 for Sex Break Down')
+        print('Select 3 for Analysis of female violent behavior')
+        print('Select 4 for Analysis of Male violent behavior')
+        print('Select 5 for Question 12 Data')
+        print('Select 6 for Question 17 Data')
+        print('Select 7 for Histogram')
+        print('Select 8 for Heatmap 1')
+        print('Select 9 for Heatmap 2')
+        print('')
+        
+    def takeInput(number):
+        if number == 1:
+            print(f"you entered {number}")
+            #load
+            #do something
+            ageBreakdown()
+            
+        if number == 2:
+            print(f"you entered {number}")
+            #load
+            #do something
+            sexBreakdown()
+        if number == 3:
+            print(f"you entered {number}")
+            #load
+            #do something
+            possibleCorelationFemales()
+        if number == 4:
+            print(f"you entered {number}")
+            #load
+            #do something
+            possibleCorelationMales()
+        if number == 5:
+            print(f"you entered {number}")
+            #load
+            #do something
+            question12Graph()
+        if number == 6:
+            print(f"you entered {number}")
+            #load
+            #do something
+            question17Graph()
+        if number == 7:
+            print(f"you entered {number}")
+            #load
+            #do something
+            hist()
+        if number == 8:
+            print(f"you entered {number}")
+            #load
+            #do something
+            heatmap1()
+        if number == 9:
+            print(f"you entered {number}")
+            #load
+            #do something
+            heatmap2()
+        
+            
     
-
-#     print("Please select option when prompted...\n\n") 
-#     console = Console()
-
-#     status = console.status("[bold green]loading...")
-#     status.start()
-    
-#     for i in range(10):
-#         time.sleep(0.5)
-    
-#     status.stop()
-
-
-
-
-ageBreakdown()
-sexBreakdown()
-possibleCorelationFemales()
-question12Graph()
-question17Graph()
-possibleCorelationMales()
-pieChartAges()
-hist()
-heatmap1()
-heatmap2()
+    #userInput = 'y'
+    displayMenu()
+    A = int(input("\nWhat is your Selection?\t"))
+    if A == 1 or A ==2 or A == 3 or A ==4 or A ==5 or A ==6 or A == 7 or A ==8 or A ==9:
+        takeInput(A)
+            
+    else:
+        print("invalid")
+        continue 
+    print('')
+    keepGoing = input("continue?(y/n)")
