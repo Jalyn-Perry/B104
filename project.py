@@ -20,9 +20,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-import time
-from rich.console import Console
-from rich.progress import track
+
 
 #------------------------------------------------------------------------------
 
@@ -293,9 +291,10 @@ def pieChartAges():
     '#B0E0E6',  # PowderBlue
     ]
     plt.pie(y, labels = mylabels, colors = mycolors, shadow = True)
+    plt.title('Age Percenatage Breakdown')
     plt.legend(y)
     plt.figure(figsize=(4,5))
-    plt.title('Age Percenatage')
+    
     plt.show()
 #------------------------------------------------------------------------------
 
@@ -323,7 +322,7 @@ def hist():
     sns.histplot(y, alpha=0.5, color='purple', bins=bins)
     
     plt.figure(figsize=(10, 6))
-    
+    plt.title('Correlation For Question 12')
     sns.kdeplot(x, alpha=0.7, color='blue')
     sns.kdeplot(y, alpha=0.7, color='purple')
     plt.show()
@@ -335,7 +334,7 @@ def hist():
 ###############################################################################
 def heatmap1():
     new_df = df1.drop('q5', axis=1)
-    sns.heatmap(new_df.corr(), cmap='Blues')
+    sns.heatmap(new_df.corr(), cmap='coolwarm', annot=True)
     plt.show()
     
 def heatmap2():
@@ -345,7 +344,8 @@ def heatmap2():
     questionsToDrop = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'raceeth']
     df10 = df1.drop(questionsToDrop, axis=1)
     df10 = df10.dropna()
-    sns.heatmap(df10.corr(method='spearman'), cmap='BuGn', annot=True)
+    sns.heatmap(df10.corr(method='spearman'), cmap='coolwarm', annot=True)
+    plt.title('Heatmap corelation between all relevant questions in the Survey')
     plt.show()
 #------------------------------------------------------------------------------
 
@@ -358,6 +358,7 @@ keepGoing = 'y'
 while keepGoing == 'y':
 
     def displayMenu():
+        print('Select 0 for Age Breakdown (Non-exploded graph)')
         print('Select 1 for Age Break Down')
         print('Select 2 for Sex Break Down')
         print('Select 3 for Analysis of female violent behavior')
@@ -370,6 +371,13 @@ while keepGoing == 'y':
         print('')
         
     def takeInput(number):
+        if number == 0:
+            print(f"you entered {number}")
+            #load
+            #do something
+            pieChartAges()
+        
+        
         if number == 1:
             print(f"you entered {number}")
             #load
@@ -422,7 +430,7 @@ while keepGoing == 'y':
     #userInput = 'y'
     displayMenu()
     A = int(input("\nWhat is your Selection?\t"))
-    if A == 1 or A ==2 or A == 3 or A ==4 or A ==5 or A ==6 or A == 7 or A ==8 or A ==9:
+    if A == 0 or A == 1 or A ==2 or A == 3 or A ==4 or A ==5 or A ==6 or A == 7 or A ==8 or A ==9:
         takeInput(A)
             
     else:
