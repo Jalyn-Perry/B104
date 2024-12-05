@@ -1,16 +1,3 @@
-
-"""
-TODO     
-#pie chart for age of participants      ✓
-#pie chart for sex of participants      ✓
-histogram                               ✓
-heatmap                                 ✓
-is heatmap accurate?                     ✓
-change colors for all graphs?            ✓
-make sure everyting is mapped correctly  ✓
-
-"""
-
 # age, sex, and violent tendencies
 
 ###############################################################################
@@ -20,9 +7,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-
+import time
 
 #------------------------------------------------------------------------------
+
 
 
 ###############################################################################
@@ -36,9 +24,7 @@ X = df2
 #------------------------------------------------------------------------------
 
 
-###############################################################################
-# age breakdown of participants
-###############################################################################
+
 ###############################################################################
 # age breakdown of participants
 ###############################################################################
@@ -52,7 +38,7 @@ def ageBreakdown():
         6:"17",
         7:"18+"
         }
-    colors = [
+    mycolors = [
     '#0000FF',  # Blue
     '#1E90FF',  # DodgerBlue
     '#4169E1',  # RoyalBlue
@@ -64,24 +50,19 @@ def ageBreakdown():
     
     df4['q1'] = df4['q1'].replace(df4_age_map)
     a = df4.groupby('q1').size()
-    mylabels = ["12", "13", "14", "15", "16", "17", "18+"]
-    exp_nums = [0.5, 0.5, 0.1, 0.1, 0.1, 0.1, 0.1]
-    #print(a)
-    plt.figure(figsize=(10,13))
-    
-    plt.pie(a, explode=exp_nums, labels=mylabels, labeldistance=0.7, colors=colors, shadow= True)
+    a.plot(kind='bar', color=mycolors)
     plt.title("Age Breakdown of Participants")
-    plt.legend(a)
-    
+    plt.xlabel("Age")
+    plt.ylabel("Count")
+    plt.show()
     ## resources ##
     """
     https://www.w3schools.com/python/matplotlib_pie_charts.asp
     https://stackoverflow.com/questions/46542572/how-to-plot-pie-chart-using-data-frame-group-by-different-range
     https://www.freecodecamp.org/news/matplotlib-figure-size-change-plot-size-in-python/
     """
-    plt.show()
 #------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
+
 
 
 ###############################################################################
@@ -94,7 +75,7 @@ def sexBreakdown(): ## Pink & Blue
         }
     colors = [
     '#0000FF',  # Blue
-    'hotpink',  # Hotpink
+    'orange',  # green
     ]
     
     df4['q2'] = df4['q2'].replace(df4_sex_map)
@@ -109,7 +90,8 @@ def sexBreakdown(): ## Pink & Blue
     plt.legend(b)
     plt.show()
 #------------------------------------------------------------------------------
-    
+ 
+   
 
 ###############################################################################
 # how many female students brought weapons 4 or more days
@@ -155,6 +137,7 @@ def possibleCorelationFemales():
 #------------------------------------------------------------------------------
 
 
+
 ###############################################################################
 # q12 graph
 ###############################################################################
@@ -189,6 +172,7 @@ def question12Graph():
 #------------------------------------------------------------------------------
 
 
+
 ###############################################################################
 # q17 graph
 ###############################################################################
@@ -221,6 +205,7 @@ def question17Graph():
         ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height() + 655), ha='center', va='top', color='black', fontsize=8)
     plt.show()
 #------------------------------------------------------------------------------
+
 
 
 ###############################################################################
@@ -258,6 +243,7 @@ def possibleCorelationMales():
     
 
 #------------------------------------------------------------------------------
+
 
 
 ###############################################################################
@@ -299,6 +285,7 @@ def pieChartAges():
 #------------------------------------------------------------------------------
 
 
+
 ###############################################################################
 # full histogram
 ###############################################################################
@@ -329,25 +316,27 @@ def hist():
 #------------------------------------------------------------------------------
 
 
+
 ###############################################################################
 # heatmaps 
 ###############################################################################
 def heatmap1():
-    new_df = df1.drop('q5', axis=1)
-    sns.heatmap(new_df.corr(), cmap='coolwarm', annot=True)
+    questionToDrop = ['q5', 'raceeth', 'q3', 'q4', 'q5', 'q6']
+    new_df = df1.drop(questionToDrop, axis=1)
+    sns.heatmap(new_df.corr(), cmap='Blues', annot=True)
     plt.show()
     
 def heatmap2():
-    
-
-        
+     
     questionsToDrop = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'raceeth']
     df10 = df1.drop(questionsToDrop, axis=1)
     df10 = df10.dropna()
-    sns.heatmap(df10.corr(method='spearman'), cmap='coolwarm', annot=True)
+    sns.heatmap(df10.corr(method='spearman'), cmap='Blues', annot=True)
     plt.title('Heatmap corelation between all relevant questions in the Survey')
     plt.show()
 #------------------------------------------------------------------------------
+
+
 
 ###############################################################################
 # script 
@@ -355,19 +344,58 @@ def heatmap2():
 
 keepGoing = 'y'
 
+
+print("""
+      
+  __ _  __ _  ___                                                                                      
+ / _` |/ _` |/ _ \                                                                                     
+| (_| | (_| |  __/_                                                                                    
+ \__,_|\__, |\___( )  _                                                                                
+        __/ |    |/  | |                                                                               
+  __ _ |___/_ __   __| | ___ _ __                                                                      
+ / _` |/ _ \ '_ \ / _` |/ _ \ '__|                                                                     
+| (_| |  __/ | | | (_| |  __/ |_                                                                       
+ \__, |\___|_| |_|\__,_|\___|_( )  _            _     _                 _                 _            
+  __/ |         | |       (_) |/  | |          | |   | |               | |               (_)           
+ |___/ _ __   __| | __   ___  ___ | | ___ _ __ | |_  | |_ ___ _ __   __| | ___ _ __   ___ _  ___  ___  
+ / _` | '_ \ / _` | \ \ / / |/ _ \| |/ _ \ '_ \| __| | __/ _ \ '_ \ / _` |/ _ \ '_ \ / __| |/ _ \/ __| 
+| (_| | | | | (_| |  \ V /| | (_) | |  __/ | | | |_  | ||  __/ | | | (_| |  __/ | | | (__| |  __/\__ \ 
+ \__,_|_| |_|\__,_|   \_/ |_|\___/|_|\___|_| |_|\__|  \__\___|_| |_|\__,_|\___|_| |_|\___|_|\___||___/ 
+                                                                                                       
+                                                                                                       
+                                                                        Data analysis script by Jalyn Perry
+      
+Please select an option when prompted...
+      """)
+
+
+
 while keepGoing == 'y':
 
     def displayMenu():
+        time.sleep(0.2)
+        time.sleep(0.2)
+        print('-------------------------------------------------')
         print('Select 0 for Age Breakdown (Non-exploded graph)')
+        time.sleep(0.2)
         print('Select 1 for Age Break Down')
+        time.sleep(0.2)
         print('Select 2 for Sex Break Down')
-        print('Select 3 for Analysis of female violent behavior')
+        time.sleep(0.2)
+        print('Select 3 for Analysis of Female violent behavior')
+        time.sleep(0.2)
         print('Select 4 for Analysis of Male violent behavior')
+        time.sleep(0.2)
         print('Select 5 for Question 12 Data')
+        time.sleep(0.2)
         print('Select 6 for Question 17 Data')
+        time.sleep(0.2)
         print('Select 7 for Histogram')
+        time.sleep(0.2)
         print('Select 8 for Heatmap 1')
+        time.sleep(0.2)
         print('Select 9 for Heatmap 2')
+        time.sleep(0.2)
         print('')
         
     def takeInput(number):
@@ -429,7 +457,11 @@ while keepGoing == 'y':
     
     #userInput = 'y'
     displayMenu()
-    A = int(input("\nWhat is your Selection?\t"))
+    try: 
+        A = int(input("\nWhat is your Selection?\t"))
+    except:
+        print('please enter a number')
+        continue
     if A == 0 or A == 1 or A ==2 or A == 3 or A ==4 or A ==5 or A ==6 or A == 7 or A ==8 or A ==9:
         takeInput(A)
             
