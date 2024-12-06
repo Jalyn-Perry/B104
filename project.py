@@ -470,3 +470,4 @@ while keepGoing == 'y':
         continue 
     print('')
     keepGoing = input("continue?(y/n)")
+print('Have a good day!')
